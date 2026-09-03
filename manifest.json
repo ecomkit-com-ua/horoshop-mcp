@@ -1,0 +1,76 @@
+{
+  "manifest_version": "0.2",
+  "name": "horoshop-mcp",
+  "display_name": "Horoshop",
+  "version": "0.1.0",
+  "description": "Керуйте магазином на Horoshop з чату: замовлення, каталог, ціни, покупці.",
+  "long_description": "Підключає асистента до вашого магазину на Horoshop через офіційний інтерфейс для інтеграцій — той самий, яким користуються CRM і системи обліку.\n\nДалі можна просити звичайною мовою: «покажи замовлення за минулий тиждень, які ще в обробці», «які товари в розділі Аксесуари без опису для пошуку», «онови ціни на цих 200 артикулів», «познач ці замовлення відправленими і додай номери ТТН».\n\n14 інструментів поверх 21 функції API: замовлення й статуси, вивантаження та імпорт товарів, розділи каталогу, покупці, комплекти «разом дешевше», вебхуки, довідники доставки, оплати, валют і рівнів цін B2B.\n\nHoroshop не видає окремих ключів для інтеграцій, тому потрібні логін і пароль адміністратора. Заведіть окремого адміна під інтеграцію: Налаштування → Адміни. Перший запуск залиште в режимі лише читання — тоді інструменти, які щось змінюють, не реєструються взагалі.\n\nНічого не збирається: телеметрії немає, дані йдуть тільки між вашим комп'ютером і вашим магазином.",
+  "author": {
+    "name": "Sergiy Troitskiy",
+    "email": "hello@ecomkit.com.ua",
+    "url": "https://ecomkit.com.ua"
+  },
+  "homepage": "https://ecomkit.com.ua/instrumenty/",
+  "documentation": "https://github.com/ecomkit-com-ua/horoshop-mcp#readme",
+  "support": "https://github.com/ecomkit-com-ua/horoshop-mcp/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ecomkit-com-ua/horoshop-mcp"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "privacy_policies": [
+    "https://ecomkit.com.ua/pryvatnist-instrumenty/"
+  ],
+  "keywords": ["horoshop", "ecommerce", "ukraine", "orders", "catalog"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "HOROSHOP_DOMAIN": "${user_config.domain}",
+        "HOROSHOP_LOGIN": "${user_config.login}",
+        "HOROSHOP_PASSWORD": "${user_config.password}",
+        "HOROSHOP_READONLY": "${user_config.readonly}"
+      }
+    }
+  },
+  "user_config": {
+    "domain": {
+      "type": "string",
+      "title": "Домен магазину",
+      "description": "Наприклад myshop.com.ua — без https:// і без слеша в кінці.",
+      "required": true
+    },
+    "login": {
+      "type": "string",
+      "title": "Логін адміністратора",
+      "description": "Заведіть окремого адміна під інтеграцію: Налаштування → Адміни у вашій адмінці. Його можна вимкнути одним рухом, не блокуючи власний вхід.",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "title": "Пароль адміністратора",
+      "description": "Horoshop не видає окремих ключів для інтеграцій, тому потрібен пароль. Зберігається лише на вашому комп'ютері.",
+      "sensitive": true,
+      "required": true
+    },
+    "readonly": {
+      "type": "boolean",
+      "title": "Режим лише читання",
+      "description": "Увімкнено — інструменти, які щось змінюють у магазині, не реєструються взагалі, тому помилитись неможливо. Вимикайте лише після того, як подивитесь, як воно відповідає на прості питання.",
+      "default": true,
+      "required": false
+    }
+  },
+  "tools_generated": true,
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=20.0.0"
+    }
+  }
+}

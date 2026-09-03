@@ -229,6 +229,25 @@ node --test test/format.test.mjs
 
 MIT.
 
+## Privacy Policy
+
+**No data is collected.** This server contains no telemetry, analytics or usage reporting,
+and makes no requests to any server operated by ecomkit.
+
+- **Credentials** — your store domain, admin login and password are stored in your own MCP
+  client's configuration file on your own machine and are transmitted only to your own store.
+  The author has no access to them.
+- **Where your data does go** — the server passes your store's data into your conversation
+  with your AI assistant, so it reaches your AI provider (Anthropic, Google, OpenAI or
+  another) under that provider's privacy policy, not this one. Do not request exports of data
+  that must not leave your company.
+- **Third parties** — none beyond those two. Nothing is shared, sold or transferred.
+- **Retention** — none by the author, as nothing is received.
+- **Contact** — hello@ecomkit.com.ua
+
+Full policy, in Ukrainian and English:
+[ecomkit.com.ua/pryvatnist-instrumenty](https://ecomkit.com.ua/pryvatnist-instrumenty/)
+
 ---
 
 Зробив [Сергій Троїцький](https://ecomkit.com.ua) — запуск, SEO та автоматизація інтернет-магазинів.
