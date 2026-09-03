@@ -1,0 +1,49 @@
+{
+  "name": "horoshop-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for the Horoshop e-commerce API \u2014 orders, catalog, customers, webhooks",
+  "type": "module",
+  "bin": {
+    "horoshop-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "horoshop",
+    "ecommerce",
+    "ukraine",
+    "claude"
+  ],
+  "author": "Sergiy Troitskiy <hello@ecomkit.com.ua> (https://ecomkit.com.ua)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serg9375/horoshop-mcp.git"
+  },
+  "homepage": "https://github.com/serg9375/horoshop-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/serg9375/horoshop-mcp/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}

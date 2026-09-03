@@ -1,0 +1,158 @@
+# horoshop-mcp
+
+**English:** an MCP server for the [Horoshop](https://horoshop.ua) e-commerce platform. It gives
+Claude, Cursor and any other MCP client direct access to a Horoshop store's API — orders,
+catalog, categories, customers, product sets, reference data and webhooks. Install with
+`npx -y horoshop-mcp`, configure with your store domain and an admin login. MIT licensed.
+Documentation below is in Ukrainian.
+
+---
+
+## Що це
+
+Це MCP-сервер для [Horoshop](https://horoshop.ua). Він дає Claude (або будь-якому іншому
+MCP-клієнту) прямий доступ до API вашого магазину: замовлення, каталог, розділи, покупці,
+комплекти товарів, довідники доставки й оплати, вебхуки.
+
+Далі можна просто просити звичайною мовою:
+
+- «покажи замовлення за минулий тиждень, які ще в обробці»
+- «вивантаж товари з розділу "Аксесуари", де не заповнений SEO-опис»
+- «онови ціни на ці 20 артикулів»
+- «скільки покупців зареєструвалося в серпні»
+
+Сервер не має власної логіки поверх Horoshop — це тонка обгортка над
+[офіційним API](https://horoshop.notion.site/api-doc).
+
+## Що потрібно
+
+- Node.js 20 або новіший
+- магазин на Horoshop
+- логін і пароль адміністратора
+
+## Крок 1. Створіть окремого адміна для API
+
+В адмінпанелі магазину: **Налаштування → Адміни → додати адміністратора**.
+
+Створіть **окремий** обліковий запис саме для API, а не використовуйте свій особистий. Так
+доступ можна відкликати одним рухом, не блокуючи собі вхід, і в логах видно, що саме робив
+інтеграційний доступ.
+
+Horoshop не має API-ключів: авторизація йде звичайним логіном і паролем адміна.
+
+## Крок 2. Підключіть сервер
+
+**Claude Code** — у `.mcp.json` в корені проєкту:
+
+```json
+{
+  "mcpServers": {
+    "horoshop": {
+      "command": "npx",
+      "args": ["-y", "horoshop-mcp"],
+      "env": {
+        "HOROSHOP_DOMAIN": "myshop.com.ua",
+        "HOROSHOP_LOGIN": "api",
+        "HOROSHOP_PASSWORD": "..."
+      }
+    }
+  }
+}
+```
+
+**Claude Desktop** — те саме, але у `claude_desktop_config.json`
+(macOS: `~/Library/Application Support/Claude/`, Windows: `%APPDATA%\Claude\`).
+
+**Cursor** — той самий блок у `~/.cursor/mcp.json`.
+
+Після цього перезапустіть клієнт.
+
+> Файл конфігурації містить пароль адміна відкритим текстом. Тримайте його поза git —
+> додайте `.mcp.json` у `.gitignore`.
+
+## Інструменти
+
+Читання:
+
+- `horoshop_orders_list` — замовлення з товарами, доставкою, оплатою, знижками й UTM-мітками.
+  Фільтри за датами, номерами та статусами
+- `horoshop_order_statuses` — усі статуси замовлень магазину (потрібен Horoshop 4.0+)
+- `horoshop_products_export` — товари з каталогу: ціни, наявність, розділи, характеристики,
+  залишки, SEO. Фільтри за розділом, артикулом і видимістю
+- `horoshop_categories_export` — дерево розділів каталогу з ідентифікаторами
+- `horoshop_users_export` — зареєстровані покупці
+- `horoshop_store_reference` — довідники магазину одним інструментом: варіанти й типи доставки,
+  варіанти й методи оплати, валюти з курсами, іконки товарів, а для B2B — групи покупців і
+  рівні цін
+
+Запис:
+
+- `horoshop_products_import` — створення й оновлення товарів
+- `horoshop_orders_update` — статус, ознака оплати, номер відстеження
+- `horoshop_users_import` — створення й оновлення покупців
+- `horoshop_product_sets_import` / `horoshop_product_sets_remove` — комплекти «разом дешевше»
+- `horoshop_webhook_subscribe` / `horoshop_webhook_unsubscribe` — підписка на події магазину
+
+Універсальний виклик:
+
+- `horoshop_call` — будь-яка функція API за назвою з документації. Для того, чого ще немає
+  серед окремих інструментів
+
+## Обережно з імпортом товарів
+
+`horoshop_products_import` пише в живий магазин, і **скасувати це неможливо**. Найнебезпечніші
+значення за замовчуванням:
+
+- `images`, `gallery_common` і `gallery_360` мають `override: true` за замовчуванням — це
+  **видаляє поточну галерею** перед завантаженням нових фото. Щоб додати фото без видалення,
+  передавайте `override: false`; щоб не чіпати галерею — не передавайте її взагалі
+- `accessories` і `gifts` **замінюють** поточні списки, а не доповнюють їх
+
+Перед масовим імпортом перевірте все на одному тестовому артикулі й звірте результат через
+`horoshop_products_export`.
+
+Якщо потрібен доступ лише на читання — поставте `HOROSHOP_READONLY=1`, і інструменти запису
+взагалі не з'являться в списку.
+
+## Змінні середовища
+
+Обов'язкові:
+
+- `HOROSHOP_DOMAIN` — домен магазину, наприклад `myshop.com.ua`. Можна з `https://`, можна без
+- `HOROSHOP_LOGIN` — логін адміна
+- `HOROSHOP_PASSWORD` — пароль адміна
+
+Необов'язкові:
+
+- `HOROSHOP_READONLY=1` — сховати всі інструменти запису
+- `HOROSHOP_TIMEOUT_MS` — таймаут запиту, за замовчуванням `60000`
+- `HOROSHOP_MAX_RESPONSE_BYTES` — межа розміру відповіді, за замовчуванням `100000`. Великі
+  вивантаження обрізаються з поміткою, скільки записів показано
+- `HOROSHOP_INSECURE_HTTP=1` — звертатися по `http` замість `https` (для тестових магазинів)
+
+## Обмеження Horoshop, про які варто знати
+
+- токен авторизації живе 600 секунд — сервер оновлює його сам
+- `catalog/export` віддає максимум 500 товарів за раз; гортайте через `offset`
+- `orders/get` і `users/export` ігнорують `offset` без `limit` — сервер завжди надсилає обидва
+- вебхуків на одну подію може бути не більше 5, і API не вміє показати наявні підписки
+- частина функцій потребує Horoshop 4.0+ або модуля B2B — тоді у відповіді буде
+  `UNDEFINED_FUNCTION`
+
+## Розробка
+
+```bash
+npm install
+npm run build
+node dist/index.js
+```
+
+## Ліцензія
+
+MIT.
+
+---
+
+Зробив [Сергій Троїцький](https://ecomkit.com.ua) — запуск, SEO та автоматизація інтернет-магазинів.
+Потрібен аудит магазину на Horoshop?
+[ecomkit.com.ua](https://ecomkit.com.ua?utm_source=github&utm_medium=readme&utm_campaign=horoshop-mcp)
