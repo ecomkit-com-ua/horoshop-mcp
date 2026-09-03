@@ -3,7 +3,7 @@
 **English:** an MCP server for the [Horoshop](https://horoshop.ua) e-commerce platform. It gives
 Claude, Cursor and any other MCP client direct access to a Horoshop store's API — orders,
 catalog, categories, customers, product sets, reference data and webhooks. Install with
-`npx -y github:ecomkit-com-ua/horoshop-mcp`, configure with your store domain and an admin
+`npx -y horoshop-mcp`, configure with your store domain and an admin
 login. `llms-install.md` lets an AI agent do the whole setup for you. MIT licensed.
 Documentation below is in Ukrainian.
 
@@ -72,7 +72,7 @@ Horoshop не має API-ключів: авторизація йде звича�
   "mcpServers": {
     "horoshop": {
       "command": "npx",
-      "args": ["-y", "github:ecomkit-com-ua/horoshop-mcp"],
+      "args": ["-y", "horoshop-mcp"],
       "env": {
         "HOROSHOP_DOMAIN": "myshop.com.ua",
         "HOROSHOP_LOGIN": "api",
@@ -99,8 +99,8 @@ Horoshop не має API-ключів: авторизація йде звича�
 
 Після цього перезапустіть клієнт.
 
-`npx` сам завантажить репозиторій і збере його — окремо нічого встановлювати не треба. Коли
-пакет з'явиться в npm, той самий блок працюватиме з коротким `["-y", "horoshop-mcp"]`.
+`npx` сам завантажить пакет з npm — окремо нічого встановлювати не треба. Найсвіжіший код,
+ще до релізу, ставиться прямо з GitHub: `["-y", "github:ecomkit-com-ua/horoshop-mcp"]`.
 
 > Файл конфігурації містить пароль адміна відкритим текстом. Тримайте його поза git —
 > додайте `.mcp.json` у `.gitignore`.

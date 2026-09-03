@@ -17,10 +17,10 @@ MCP-сервер для [Horoshop](https://horoshop.ua): замовлення, �
 Команда запуску, яку треба прописати в конфіг MCP-клієнта:
 
 ```
-npx -y github:ecomkit-com-ua/horoshop-mcp
+npx -y horoshop-mcp
 ```
 
-Окремо нічого встановлювати не треба: `npx` сам завантажить репозиторій, збере його і запустить.
+Окремо нічого встановлювати не треба: `npx` сам завантажить пакет з npm і запустить його.
 Потрібен Node.js 20 або новіший — перевір `node --version` перед налаштуванням.
 
 ## Крок 1. Збери дані в користувача
@@ -58,7 +58,7 @@ npx -y github:ecomkit-com-ua/horoshop-mcp
   "mcpServers": {
     "horoshop": {
       "command": "npx",
-      "args": ["-y", "github:ecomkit-com-ua/horoshop-mcp"],
+      "args": ["-y", "horoshop-mcp"],
       "env": {
         "HOROSHOP_DOMAIN": "myshop.com.ua",
         "HOROSHOP_LOGIN": "api",
