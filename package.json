@@ -20,7 +20,7 @@
     "pretest": "npm run build",
     "test": "node --test test/*.test.mjs",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "keywords": [
     "mcp",
@@ -34,11 +34,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/serg9375/horoshop-mcp.git"
+    "url": "git+https://github.com/ecomkit-com-ua/horoshop-mcp.git"
   },
-  "homepage": "https://github.com/serg9375/horoshop-mcp#readme",
+  "homepage": "https://github.com/ecomkit-com-ua/horoshop-mcp#readme",
   "bugs": {
-    "url": "https://github.com/serg9375/horoshop-mcp/issues"
+    "url": "https://github.com/ecomkit-com-ua/horoshop-mcp/issues"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",

@@ -3,7 +3,8 @@
 **English:** an MCP server for the [Horoshop](https://horoshop.ua) e-commerce platform. It gives
 Claude, Cursor and any other MCP client direct access to a Horoshop store's API — orders,
 catalog, categories, customers, product sets, reference data and webhooks. Install with
-`npx -y horoshop-mcp`, configure with your store domain and an admin login. MIT licensed.
+`npx -y github:ecomkit-com-ua/horoshop-mcp`, configure with your store domain and an admin
+login. `llms-install.md` lets an AI agent do the whole setup for you. MIT licensed.
 Documentation below is in Ukrainian.
 
 ---
@@ -30,6 +31,25 @@ MCP-клієнту) прямий доступ до API вашого магази
 - магазин на Horoshop
 - логін і пароль адміністратора
 
+## Встановлення через ШІ
+
+Найшвидший шлях — попросити про це самого асистента. Скопіюйте цей промпт у Claude Code,
+Claude Desktop або Cursor:
+
+```
+Встанови мені MCP-сервер horoshop-mcp.
+Інструкція для тебе:
+https://github.com/ecomkit-com-ua/horoshop-mcp/blob/main/llms-install.md
+Прочитай її й виконай: спитай у мене домен магазину, логін і пароль адміна, пропиши конфіг
+для того клієнта, у якому ти зараз працюєш, залиш на перший раз режим лише-читання
+і перевір, що сервер відповідає.
+```
+
+Асистент сам спитає доступи, впише блок у потрібний файл конфігурації й перевірить зв'язок.
+Пароль він записує тільки в конфіг — не в чат і не в git.
+
+Далі — те саме руками, якщо так зручніше.
+
 ## Крок 1. Створіть окремого адміна для API
 
 В адмінпанелі магазину: **Налаштування → Адміни → додати адміністратора**.
@@ -49,7 +69,7 @@ Horoshop не має API-ключів: авторизація йде звича�
   "mcpServers": {
     "horoshop": {
       "command": "npx",
-      "args": ["-y", "horoshop-mcp"],
+      "args": ["-y", "github:ecomkit-com-ua/horoshop-mcp"],
       "env": {
         "HOROSHOP_DOMAIN": "myshop.com.ua",
         "HOROSHOP_LOGIN": "api",
@@ -66,6 +86,9 @@ Horoshop не має API-ключів: авторизація йде звича�
 **Cursor** — той самий блок у `~/.cursor/mcp.json`.
 
 Після цього перезапустіть клієнт.
+
+`npx` сам завантажить репозиторій і збере його — окремо нічого встановлювати не треба. Коли
+пакет з'явиться в npm, той самий блок працюватиме з коротким `["-y", "horoshop-mcp"]`.
 
 > Файл конфігурації містить пароль адміна відкритим текстом. Тримайте його поза git —
 > додайте `.mcp.json` у `.gitignore`.
