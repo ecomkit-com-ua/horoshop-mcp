@@ -54,13 +54,9 @@ export function registerOrderTools(ctx: ToolContext): void {
         offset,
       });
 
-      const result = await callApi(ctx, 'orders/get', params, {
-        notes: [
-          `Requested up to ${limit} orders starting at offset ${offset ?? 0}. ` +
-            `For the next page call again with offset ${(offset ?? 0) + limit}.`,
-        ],
+      return callApi(ctx, 'orders/get', params, {
+        pagination: { key: 'orders', label: 'orders', offset: offset ?? 0, limit },
       });
-      return result;
     },
   );
 

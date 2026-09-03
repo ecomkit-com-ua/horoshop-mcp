@@ -3,7 +3,7 @@
 import type { McpServer } from '@modelcontextprotocol/server';
 import type { Config } from '../config.js';
 import type { HoroshopClient } from '../client.js';
-import { errorResult, toolResult, type ToolTextResult } from '../format.js';
+import { errorResult, toolResult, type Pagination, type ToolTextResult } from '../format.js';
 
 export interface ToolContext {
   server: McpServer;
@@ -13,6 +13,8 @@ export interface ToolContext {
 
 export interface CallOptions {
   notes?: Array<string | undefined>;
+  /** Paginated tools pass this instead of writing their own paging note — see format.ts. */
+  pagination?: Pagination;
 }
 
 /**
@@ -30,6 +32,7 @@ export async function callApi(
     return toolResult(fn, result, {
       maxBytes: ctx.config.maxResponseBytes,
       notes: options.notes,
+      pagination: options.pagination,
     });
   } catch (err) {
     return errorResult(fn, err);

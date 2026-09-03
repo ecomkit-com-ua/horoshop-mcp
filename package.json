@@ -1,7 +1,7 @@
 {
   "name": "horoshop-mcp",
   "version": "0.1.0",
-  "description": "MCP server for the Horoshop e-commerce API \u2014 orders, catalog, customers, webhooks",
+  "description": "MCP server for the Horoshop e-commerce API — orders, catalog, customers, webhooks",
   "type": "module",
   "bin": {
     "horoshop-mcp": "dist/index.js"
@@ -17,6 +17,8 @@
   },
   "scripts": {
     "build": "tsc && chmod +x dist/index.js",
+    "pretest": "npm run build",
+    "test": "node --test test/*.test.mjs",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
   },

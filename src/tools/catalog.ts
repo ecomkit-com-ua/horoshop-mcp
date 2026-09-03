@@ -84,9 +84,13 @@ export function registerCatalogTools(ctx: ToolContext): void {
           limit > EXPORT_MAX_LIMIT
             ? `limit was lowered from ${limit} to ${EXPORT_MAX_LIMIT}: Horoshop refuses larger exports.`
             : undefined,
-          `Showing up to ${effectiveLimit} products from offset ${offset ?? 0}. ` +
-            `For the next page call again with offset ${(offset ?? 0) + effectiveLimit}.`,
         ],
+        pagination: {
+          key: 'products',
+          label: 'products',
+          offset: offset ?? 0,
+          limit: effectiveLimit,
+        },
       });
     },
   );

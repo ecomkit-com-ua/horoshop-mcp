@@ -30,10 +30,7 @@ export function registerUserTools(ctx: ToolContext): void {
     async ({ from, to, limit, offset }) =>
       // As with orders, Horoshop ignores offset unless limit is sent too.
       callApi(ctx, 'users/export', compact({ from, to, limit, offset }), {
-        notes: [
-          `Showing up to ${limit} customers from offset ${offset ?? 0}. ` +
-            `For the next page call again with offset ${(offset ?? 0) + limit}.`,
-        ],
+        pagination: { key: 'users', label: 'customers', offset: offset ?? 0, limit },
       }),
   );
 
