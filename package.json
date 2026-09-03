@@ -1,6 +1,7 @@
 {
   "name": "horoshop-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.ecomkit-com-ua/horoshop",
   "description": "MCP server for the Horoshop e-commerce API — orders, catalog, customers, webhooks",
   "type": "module",
   "bin": {

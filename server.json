@@ -1,0 +1,69 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.ecomkit-com-ua/horoshop",
+  "description": "MCP server for the Horoshop e-commerce API — orders, catalog, customers, webhooks",
+  "repository": {
+    "url": "https://github.com/ecomkit-com-ua/horoshop-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://ecomkit.com.ua/instrumenty/",
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "horoshop-mcp",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "HOROSHOP_DOMAIN",
+          "description": "Store domain, e.g. myshop.com.ua (with or without https://)",
+          "isRequired": true,
+          "format": "string"
+        },
+        {
+          "name": "HOROSHOP_LOGIN",
+          "description": "Login of a dedicated admin account created in the Horoshop panel (Налаштування → Адміни)",
+          "isRequired": true,
+          "format": "string"
+        },
+        {
+          "name": "HOROSHOP_PASSWORD",
+          "description": "Password of that admin account. Horoshop has no API keys, so admin credentials are used",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "HOROSHOP_READONLY",
+          "description": "Set to 1 to hide every tool that writes to the store. Recommended for a first run",
+          "isRequired": false,
+          "format": "boolean"
+        },
+        {
+          "name": "HOROSHOP_TIMEOUT_MS",
+          "description": "Request timeout in milliseconds",
+          "isRequired": false,
+          "format": "number",
+          "default": "60000"
+        },
+        {
+          "name": "HOROSHOP_MAX_RESPONSE_BYTES",
+          "description": "Cap on a single tool response; larger exports are truncated with a note",
+          "isRequired": false,
+          "format": "number",
+          "default": "100000"
+        },
+        {
+          "name": "HOROSHOP_INSECURE_HTTP",
+          "description": "Set to 1 to use plain http instead of https (dev stores only)",
+          "isRequired": false,
+          "format": "boolean"
+        }
+      ]
+    }
+  ]
+}
