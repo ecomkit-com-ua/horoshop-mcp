@@ -9,6 +9,9 @@ Documentation below is in Ukrainian.
 
 ---
 
+> Пояснення для власника магазину, без технічних деталей —
+> [ecomkit.com.ua/instrumenty](https://ecomkit.com.ua/instrumenty/?utm_source=github&utm_medium=readme&utm_campaign=horoshop-mcp).
+
 ## Що це
 
 Це MCP-сервер для [Horoshop](https://horoshop.ua). Він дає Claude (або будь-якому іншому
@@ -230,4 +233,4 @@ MIT.
 
 Зробив [Сергій Троїцький](https://ecomkit.com.ua) — запуск, SEO та автоматизація інтернет-магазинів.
 Потрібен аудит магазину на Horoshop?
-[ecomkit.com.ua](https://ecomkit.com.ua?utm_source=github&utm_medium=readme&utm_campaign=horoshop-mcp)
+[ecomkit.com.ua](https://ecomkit.com.ua/instrumenty/?utm_source=github&utm_medium=readme&utm_campaign=horoshop-mcp)

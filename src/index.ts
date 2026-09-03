@@ -3,7 +3,7 @@
  * horoshop-mcp — an MCP server for the Horoshop e-commerce API.
  *
  * Docs: https://horoshop.notion.site/api-doc
- * Repo: https://github.com/serg9375/horoshop-mcp
+ * Repo: https://github.com/ecomkit-com-ua/horoshop-mcp
  *
  * stdout is the JSON-RPC channel. Every diagnostic must go to stderr.
  */
